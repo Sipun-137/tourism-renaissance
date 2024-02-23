@@ -3,14 +3,26 @@ import { adminNavOptions, navOptions } from "@/utils/nav";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import { GlobalContext } from "@/context";
+import Cookies from "js-cookie"
 
 
 export default function Navbar() {
+
+
+  const {isAuthUser,setAuthUser,setUser}=useContext(GlobalContext);
   const isAdmin = false;
-  const isAuthUser = false;
   const router = useRouter();
+
+  function handleLogout() {
+    setAuthUser(false);
+    setUser(null);
+    Cookies.remove("token");
+    localStorage.clear();
+    router.push("/");
+  }
 
   function NavItems({ isModal = false, isAdminView }: any) {
     return (
@@ -49,7 +61,7 @@ export default function Navbar() {
     );
   }
   return (
-    <nav className="bg-transparent fixed w-full z-20 top-0 left-0 ">
+    <nav className="bg-[#7FC7D9] fixed w-full z-20 top-0 left-0 ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center cursor-pointer">
           <span className="self-center text-2xl font-semibold whitespace-nowrap uppercase text-cyan-800 ruslan-display-regular">
@@ -66,10 +78,11 @@ export default function Navbar() {
 
           {
             // if user isn't authenticated, show login button and register link. If they are, show logout button and profile link
+            
             isAuthUser ? (
               <Fragment>
                 <Button>Profile</Button>
-                <Button>logout</Button>
+                <Button onClick={handleLogout}>logout</Button>
               </Fragment>
             ) : (
               <Fragment>

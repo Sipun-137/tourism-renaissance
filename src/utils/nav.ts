@@ -2,11 +2,21 @@ export const navOptions=[
     {
         id:"hotel",
         label:"hotel",
-        path:"/hotel-service"
+        path:"/hotel"
     },{
+        id:'restaurant',
+        label:'restaurant',
+        path:'/restaurant'
+    },
+    {
         id:'attraction',
         label:'attraction',
-        path:'/attraction-service'
+        path:'/attraction'
+    },
+    {
+        id:'dashboard',
+        label:'dashboard',
+        path:'/dashboard'
     }
 ]
 

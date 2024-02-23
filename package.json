@@ -16,7 +16,9 @@
     "@splinetool/react-spline": "^2.2.6",
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
+    "google-map-react": "^2.2.1",
     "joi": "^17.12.1",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "next": "14.1.0",
@@ -26,6 +28,8 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/google-map-react": "^2.1.10",
+    "@types/js-cookie": "^3.0.6",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20",
     "@types/react": "^18",

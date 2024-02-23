@@ -4,12 +4,15 @@ import Loading from "@/components/Loading";
 import { loginUserData } from "@/services/LoginUser";
 import { LoginCredentials } from "@/utils";
 import { Button, TextField } from "@mui/material";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import { GlobalContext } from "@/context";
 
 export default function Page() {
+  const { isAuthUser, setAuthUser, user, setUser } = useContext(GlobalContext);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<any>({
@@ -25,7 +28,11 @@ export default function Page() {
         email: "",
         password: "",
       });
+      setUser(res?.finalResult?.user);
+      setAuthUser(true);
       toast.success(res.message);
+      Cookies.set("token", res?.finalResult?.token);
+      localStorage.setItem("user", JSON.stringify(res?.finalResult?.user));
       router.push("/");
       setLoading(false);
     } else {
@@ -37,7 +44,6 @@ export default function Page() {
       });
     }
   }
-  console.log(formData);
   return (
     <>
       <Toaster position="bottom-right" toastOptions={{ duration: 2500 }} />
