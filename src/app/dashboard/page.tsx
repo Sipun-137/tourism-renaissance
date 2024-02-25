@@ -71,6 +71,7 @@ function App() {
   return (
     <section className="">
       <>
+        <Header setCoordinates= {setCoordinates} />
         <CssBaseline />
 
         <div className="grid grid-cols-10 grid-rows-5 gap-4 relative">

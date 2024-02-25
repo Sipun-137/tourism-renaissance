@@ -27,7 +27,7 @@ function Map({
   return (
     <div style={{ height: "90vh", width: "100%" }}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyCt2NZXVPlWCH2zTDCjVb5X48qKWoQKbkM" }}
+        bootstrapURLKeys={{ key: process.env.GOOGLE_API_KEY as string }}
         defaultCenter={coordinates}
         center={coordinates}
         defaultZoom={14}
@@ -42,6 +42,7 @@ function Map({
       >
         {places?.map((place, i) => (
           <div
+          
           key={i}
           >
             {!isDesktop ? (

@@ -15,7 +15,7 @@ export async function POST(req:NextRequest){
               tr_longitude: ne.lng,
             },
             headers: {
-              'X-RapidAPI-Key': 'be4a3a6a00msh877c451edd2567ap1d2adajsn469ee7f3c86d',
+              'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY as string,
               'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
             }
           })
