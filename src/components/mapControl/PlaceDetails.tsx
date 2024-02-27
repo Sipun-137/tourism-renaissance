@@ -45,7 +45,6 @@ interface PlaceDetailsProps {
 }
 
 const PlaceDetails = ({ place, selected, refProp }: any) => {
-  console.log(place);
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 

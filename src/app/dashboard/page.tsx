@@ -6,6 +6,7 @@ import Header from "@/components/mapControl/Header";
 import List from "@/components/mapControl/List";
 import { getPlaceData } from "@/services/Data/getPlaceData";
 import { GlobalContext } from "@/context";
+import PlaceAutoComplete from "@/components/mapControl/PlaceAutoComplete";
 
 interface Coordinates {
   lat: number;
@@ -31,13 +32,6 @@ function App() {
   const [type, setType] = useState<string>("restaurants");
   const [rating, setRating] = useState<number>(0);
 
-  // useEffect(() => {
-  //    navigator.geolocation.getCurrentPosition(
-  //     ({ coords: { latitude, longitude } }) => {
-  //       setCoordinates({ lat: latitude, lng: longitude });
-  //     }
-  //   );
-  // }, []);
 
   useEffect(() => {
     const filteredPlaces = places.filter((place) => place.rating > rating);
@@ -71,7 +65,7 @@ function App() {
   return (
     <section className="">
       <>
-        <Header setCoordinates= {setCoordinates} />
+        <PlaceAutoComplete setCoordinates={setCoordinates} />
         <CssBaseline />
 
         <div className="grid grid-cols-10 grid-rows-5 gap-4 relative">

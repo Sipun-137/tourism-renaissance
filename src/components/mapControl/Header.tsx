@@ -13,11 +13,11 @@ interface HeaderProps {
 
 const Header = ({ setCoordinates }: any) => {
   const autocompleteRef = useRef();
-  const placesLibrary = ['places']
-  const [autocomplete, setAutocomplete] = useState<any>(null);
-  const [searchResult, setSearchResult] = useState('');
-  const onLoad = (autoC: any) => setAutocomplete(autoC);
-
+  const [searchResult, setSearchResult] = useState('')
+  const [autocomplete,setAutocomplete]=useState<any>(null)
+  const onLoad = () => {
+    setAutocomplete(autocompleteRef.current);
+ }
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_API_KEY as string
   });
