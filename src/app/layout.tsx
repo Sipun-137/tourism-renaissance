@@ -30,7 +30,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} >
         <GlobalState>
           <Navbar />
           <main className="text-black flex flex-col mt-[65px]">

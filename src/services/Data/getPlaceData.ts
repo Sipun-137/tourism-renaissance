@@ -18,7 +18,7 @@ export const getCoordinate = async (pname: string) => {
           language: 'en'
         },
         headers: {
-          'X-RapidAPI-Key': process.env.X_GEO_LOCATION as string,
+          'X-RapidAPI-Key':'be4a3a6a00msh877c451edd2567ap1d2adajsn469ee7f3c86d',
           'X-RapidAPI-Host': 'google-maps-geocoding.p.rapidapi.com'
         }
       };

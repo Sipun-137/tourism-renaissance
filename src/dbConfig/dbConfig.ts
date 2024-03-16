@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export default async function connect() {
     try {
-        mongoose.connect("mongodb://127.0.0.1:27017/EcommerceDB"!);
+        mongoose.connect("mongodb://127.0.0.1:27017/Tourism"!);
         const connection =mongoose.connection;
 
         connection.on('connected',()=>{

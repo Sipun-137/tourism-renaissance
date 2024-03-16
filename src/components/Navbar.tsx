@@ -6,14 +6,12 @@ import { useRouter } from "next/navigation";
 import { Fragment, useContext } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { GlobalContext } from "@/context";
-import Cookies from "js-cookie"
-
+import Cookies from "js-cookie";
+import PermIdentitySharpIcon from "@mui/icons-material/PermIdentitySharp";
 
 export default function Navbar() {
-
-
-  const {isAuthUser,setAuthUser,setUser}=useContext(GlobalContext);
-  const isAdmin = false;
+  const { isAuthUser, setAuthUser, user, setUser } = useContext(GlobalContext);
+  const isAdmin = user?.role == "admin" ? true : false;
   const router = useRouter();
 
   function handleLogout() {
@@ -61,7 +59,7 @@ export default function Navbar() {
     );
   }
   return (
-    <nav className="bg-[#7FC7D9] fixed w-full z-20 top-0 left-0 ">
+    <nav className=" fixed w-full z-20 top-0 left-0  bg-gradient-to-b from-[#7FCDFF] from-40%  to-sky-100 to-90% ">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <div className="flex items-center cursor-pointer">
           <span className="self-center text-2xl font-semibold whitespace-nowrap uppercase text-cyan-800 ruslan-display-regular">
@@ -72,36 +70,44 @@ export default function Navbar() {
           {isAdmin && isAuthUser ? (
             <Fragment>
               <Button>admin</Button>
-              <Button>profile</Button>
             </Fragment>
           ) : null}
 
           {
             // if user isn't authenticated, show login button and register link. If they are, show logout button and profile link
-            
+
             isAuthUser ? (
               <Fragment>
-                <Button>Profile</Button>
-                <Button onClick={handleLogout}>logout</Button>
+                <Button href="/profile" size="small" color="inherit">
+                  <PermIdentitySharpIcon />
+                </Button>
+                <Button onClick={handleLogout} color="inherit">logout</Button>
               </Fragment>
             ) : (
               <Fragment>
-                <Button onClick={()=>{router.push("/login")}}>login</Button>
+                <Button
+                color="inherit"
+                  onClick={() => {
+                    router.push("/login");
+                  }}
+                >
+                  login
+                </Button>
               </Fragment>
             )
           }
           <Button
-              data-collapse-toggle="navbar-sticky"
-              size="small"
-              aria-controls="navbat-sticky"
-              aria-expanded="false"
-              className="md:hidden text-gray-500"
-              onClick={() => {
-                // setShowNavModal(!showNavModal);
-              }}
-            >
-              <MenuIcon />
-            </Button>
+            data-collapse-toggle="navbar-sticky"
+            size="small"
+            aria-controls="navbat-sticky"
+            aria-expanded="false"
+            className="md:hidden text-gray-500"
+            onClick={() => {
+              // setShowNavModal(!showNavModal);
+            }}
+          >
+            <MenuIcon />
+          </Button>
         </div>
         <NavItems isAdminView={isAdmin} />
       </div>

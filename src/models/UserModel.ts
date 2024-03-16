@@ -5,7 +5,8 @@ const UserSchema= new mongoose.Schema({
     name:String,
     email:String,
     password:String,
-    role:String
+    role:String,
+    imgUrl:String
 })
 
 const User=mongoose.models.User||mongoose.model("User",UserSchema)

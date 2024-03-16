@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, #DCF2F1)
-  #DCF2F1;
+  color: black;
+  background: linear-gradient(to bottom, transparent, #7FCDFF)
+  #E3EDF8;
 }
 
 @layer utilities {

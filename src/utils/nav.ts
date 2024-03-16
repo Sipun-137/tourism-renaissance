@@ -27,6 +27,10 @@ export const adminNavOptions=[
         id:"bookings",
         label:"bookings",
         path:"/bookings"
+    },{
+        id:"test",
+        label:"test",
+        path:"/test"
     }
 ]
 
