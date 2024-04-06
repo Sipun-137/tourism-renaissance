@@ -1,7 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Autocomplete, useLoadScript } from "@react-google-maps/api";
@@ -13,23 +12,23 @@ interface HeaderProps {
 
 const Header = ({ setCoordinates }: any) => {
   const autocompleteRef = useRef();
-  const [searchResult, setSearchResult] = useState('')
+  // const [searchResult, setSearchResult] = useState('')
   const [autocomplete,setAutocomplete]=useState<any>(null)
   const onLoad = () => {
     setAutocomplete(autocompleteRef.current);
  }
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.GOOGLE_API_KEY as string
-  });
+  // const { isLoaded } = useLoadScript({
+  //   googleMapsApiKey: process.env.GOOGLE_API_KEY as string
+  // });
 
   const onPlaceChanged = () => {
     const lat = autocomplete.getPlace().geometry.location.lat();
     const lng = autocomplete.getPlace().geometry.location.lng();
-
     setCoordinates(lat, lng);
+    console.log(lat,lng)
   };
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div >
       <AppBar position="static">
         <Toolbar>
           <Typography
@@ -64,7 +63,7 @@ const Header = ({ setCoordinates }: any) => {
           
         </Toolbar>
       </AppBar>
-    </Box>
+    </div>
   );
 };
 

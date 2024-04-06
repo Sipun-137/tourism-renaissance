@@ -84,3 +84,50 @@ export const RegisterCredential: RegisterCredentialItem[] = [
   },
 
 ]
+
+export const userCredentialForm=[
+  {
+    id:'name',
+    type:"text",
+    placeholder:"Enter your name",
+    label:"Full name",
+    componentType:"input",
+    helper:"Enter your name"
+  },
+  {
+    id:"aadharno",
+    type:"number",
+    placeholder:"Enter your aadhar number",
+    label:"Aadhar Number",
+    componentType:"input",
+    helper:"Enter your aadhar number"
+  }
+]
+
+
+// export const addressCredentialForm=[
+//   {
+//     id:'address',
+//     type:"text",
+//     placeholder:"Enter your address line",
+//     label:"Address line",
+//     componentType:"input",
+//     helper:"Enter your Address Line"
+//   },
+//   {
+//     id:'city',
+//     type:"text",
+//     placeholder:"Enter your city",
+//     label:"City",
+//     componentType:"input",
+//     helper:"Enter your city"
+//   },
+//   {
+//     id:'state',
+//     type:"text",
+//     placeholder:"Enter your state",
+//     label:"State",
+//     componentType:"input",
+//     helper:"Enter your state"
+//   }
+// ]

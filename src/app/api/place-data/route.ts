@@ -6,6 +6,7 @@ export const dynamic ='force-dynamic'
 export async function POST(req:NextRequest){
     const data=await req.json();
     const {type,sw,ne}=data
+    console.log(data)
     try{
         const {data}=await axios.get(`https://travel-advisor.p.rapidapi.com/${type}/list-in-boundary`,{
             params: {
@@ -15,7 +16,7 @@ export async function POST(req:NextRequest){
               tr_longitude: ne.lng,
             },
             headers: {
-              'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY as string,
+              'X-RapidAPI-Key': process.env.Y_RAPID_API_SEC_KEY as string,
               'X-RapidAPI-Host': 'travel-advisor.p.rapidapi.com'
             }
           })

@@ -22,7 +22,7 @@ function Map({
   places,
   setChildClicked,
 }: MapProps) {
-  const isDesktop = useMediaQuery("(min-width:600px)");
+  // const isDesktop = useMediaQuery("(min-width:600px)");
 
   return (
     <div style={{ height: "90vh", width: "100%" }}>
@@ -38,42 +38,7 @@ function Map({
           setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
-        onChildClick={(child: any) => setChildClicked(child)}
-      >
-        {places?.map((place, i) => (
-          <div
-          
-          key={i}
-          >
-            {!isDesktop ? (
-              <LocationOnOutlinedIcon color="primary" fontSize="large" />
-            ) : (
-              <Paper elevation={3} 
-            //   className={classes.paper}
-              >
-                <Typography
-                //   className={classes.typography}
-                  variant="subtitle2"
-                  gutterBottom
-                >
-                  {place.name}
-                </Typography>
-                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                //   className={classes.pointer}
-                  src={
-                    place.photo
-                      ? place.photo.images.large.url
-                      : "https://im.whatshot.in/img/2020/Apr/41215842-2062970037054645-8180165235601047552-o-baan-tao-cropped-1586780385.jpg"
-                  }
-                  alt={place.name}
-                />
-                <Rating size="small" value={Number(place.rating)} readOnly />
-              </Paper>
-            )}
-          </div>
-        ))}
-      </GoogleMapReact>
+      />
     </div>
   );
 }

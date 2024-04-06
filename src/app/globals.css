@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 body {
-  color: black;
-  background: linear-gradient(to bottom, transparent, #7FCDFF)
-  #E3EDF8;
+  color: rgb(0, 0, 0);
+  background: linear-gradient(to bottom, transparent, #e2e5ff)
+  #fafcff;
 }
 
 @layer utilities {
@@ -20,10 +20,18 @@ body {
   font-style: normal;
 }
 
-
-
-
-
 ::-webkit-scrollbar{
-  display: none !important;
+  display: none ;
 }
+
+.data::-webkit-scrollbar {
+  width: 8px;
+  display: block;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(25, 25, 37); 
+  border-radius: 10px;
+}
+
+

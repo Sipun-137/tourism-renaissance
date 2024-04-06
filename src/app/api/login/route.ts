@@ -41,7 +41,8 @@ export async function POST(req: NextRequest) {
                     email: valid.email,
                     name: valid.name,
                     _id: valid.id,
-                    role: valid.role
+                    role: valid.role,
+                    imgurl:valid.imgurl
                 }
             }
             console.log('login successful')

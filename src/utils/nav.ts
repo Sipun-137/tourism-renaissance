@@ -1,36 +1,58 @@
-export const navOptions=[
+import BlogPost from "@/models/BlogPostModel"
+
+export const navOptions = [
     {
-        id:"hotel",
-        label:"hotel",
-        path:"/hotel"
-    },{
-        id:'restaurant',
-        label:'restaurant',
-        path:'/restaurant'
+        id: "hotel",
+        label: "hotel",
+        path: "/u/hotel"
+    }, {
+        id: 'restaurant',
+        label: 'restaurant',
+        path: '/u/restaurant'
     },
     {
-        id:'attraction',
-        label:'attraction',
-        path:'/attraction'
+        id: 'attraction',
+        label: 'attraction',
+        path: '/u/attraction'
     },
     {
-        id:'dashboard',
-        label:'dashboard',
-        path:'/dashboard'
+      id:"blog",
+      label:"blog",
+      path:"/u/blog"  
+    },
+    // {
+    //     id: 'dashboard',
+    //     label: 'dashboard',
+    //     path: '/dashboard'
+    // }
+]
+
+export const adminNavOptions = [
+    {
+        id: "bookings",
+        label: "bookings",
+        path: "/bookings"
+    }, {
+        id: "test",
+        label: "test",
+        path: "/test"
     }
 ]
 
-
-
-export const adminNavOptions=[
+export const dropdownMenu = [
     {
-        id:"bookings",
-        label:"bookings",
-        path:"/bookings"
-    },{
-        id:"test",
-        label:"test",
-        path:"/test"
+        id: "hotel",
+        label: "hotel",
+        path: "/u/hotel"
+    }, {
+        id: 'restaurant',
+        label: 'restaurant',
+        path: '/u/restaurant'
+    },
+    {
+        id: 'attraction',
+        label: 'attraction',
+        path: '/u/attraction'
     }
 ]
 

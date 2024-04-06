@@ -1,4 +1,6 @@
-import React, { FC, RefObject } from "react";
+"use client";
+import React, { FC, RefObject, useEffect, useState } from "react";
+
 import {
   Typography,
   Button,
@@ -11,44 +13,11 @@ import {
   Rating,
 } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PhoneIcon from "@mui/icons-material/Phone";
+import PaymentsIcon from "@mui/icons-material/Payments";
 import { useRouter } from "next/navigation";
 
-
-
-interface PlaceDetailsProps {
-  place: {
-    photo: {
-      images: {
-        large: {
-          url: string;
-        };
-      };
-    };
-    name: string;
-    rating: number;
-    num_reviews: number;
-    ranking: number;
-    awards?: {
-      images: {
-        small: string;
-      };
-      display_name: string;
-    }[];
-    cuisine?: {
-      name: string;
-    }[];
-    address?: string;
-    phone?: string;
-    web_url: string;
-    website: string;
-  };
-  selected: boolean;
-  refProp?: RefObject<HTMLElement>;
-}
-
 const PlaceDetails = ({ place, selected, refProp }: any) => {
-  const router=useRouter();
+  const router = useRouter();
   if (selected)
     refProp?.current?.scrollIntoView({ behavior: "smooth", block: "start" });
 
@@ -57,21 +26,24 @@ const PlaceDetails = ({ place, selected, refProp }: any) => {
       <CardMedia
         style={{ height: 350 }}
         image={
-          place.photo
-            ? place.photo.images.large.url
+          place?.cardPhotos[0]
+            ? place?.cardPhotos[0].sizes.urlTemplate.replace(
+                "?w={width}&h={height}&s=1",
+                ""
+              )
             : "https://im.whatshot.in/img/2020/Apr/41215842-2062970037054645-8180165235601047552-o-baan-tao-cropped-1586780385.jpg"
         }
         title={place.name}
       />
       <CardContent>
         <Typography gutterBottom variant="h5">
-          {place.name}
+          {place.title}
         </Typography>
 
         <div className="flex justify-between">
-          <Rating value={Number(place.rating)} readOnly />
+          <Rating value={Number(place.bubbleRating.rating)} readOnly />
           <Typography gutterBottom variant="subtitle1">
-            out of {place.num_reviews} review
+            out of {place.bubbleRating.count} review
           </Typography>
         </div>
         <div className="flex justify-between">
@@ -100,10 +72,7 @@ const PlaceDetails = ({ place, selected, refProp }: any) => {
           )
         )}
 
-        {place?.cuisine?.map(({ name }: any) => (
-          <Chip key={name} size="small" label={name} className="mx-2 my-1" />
-        ))}
-        {place?.address && (
+        {place?.secondaryInfo && (
           <Typography
             gutterBottom
             variant="body2"
@@ -111,52 +80,37 @@ const PlaceDetails = ({ place, selected, refProp }: any) => {
             className="flex items-center justify-between mt-[10px]"
           >
             <LocationOnIcon />
-            {place.address}
+            {place.secondaryInfo}
           </Typography>
         )}
-        {place?.phone && (
+        {place?.priceForDisplay && (
           <Typography
             gutterBottom
             variant="body2"
             color="textSecondary"
             className="flex items-center justify-between mt-[10px]"
           >
-            <PhoneIcon />
-            {place.phone}
+            <PaymentsIcon />
+            <span>
+              <span className="line-through text-red-400">
+                {place.strikethroughPrice}
+              </span>
+              <span className="font-bold">{place.priceForDisplay}</span>
+            </span>
           </Typography>
         )}
         <CardActions className="flex justify-between mt-3">
           <Button
-            variant="outlined"
-            size="small"
-            color="inherit"
-            onClick={() => {
-              window.open(place.web_url);
-            }}
-          >
-            Trip Advisor
-          </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            color="inherit"
-            onClick={() => {
-              window.open(place.website);
-            }}
-          >
-            Website
-          </Button>
-          {/* <Button
+            fullWidth
             variant="outlined"
             color="inherit"
             size="small"
             onClick={() => {
-              router.push(`/u/hotel/${place.location_id}`)
-              alert("you have to book the site")
+              router.push(`/u/hotel/${place.id}`);
             }}
           >
             book now
-          </Button> */}
+          </Button>
         </CardActions>
       </CardContent>
     </Card>

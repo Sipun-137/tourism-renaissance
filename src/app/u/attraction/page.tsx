@@ -38,7 +38,7 @@ function App() {
   console.log(coordinates);
   async function collect(type: string, bounds: any) {
     const data = await getPlaceData({
-      type: type,
+      type: "attractions",
       ne: bounds.ne,
       sw: bounds.sw,
     });

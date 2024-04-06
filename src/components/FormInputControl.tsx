@@ -46,6 +46,7 @@ export default function FormInputControls({
           <InputLabel htmlFor="my-input">{obj.label}</InputLabel>
           <Input
             id={obj.id}
+            type={obj.type}
             aria-describedby={`my-helper-${obj.id}`}
             onChange={onChange}
             value={value}

@@ -74,6 +74,7 @@ export default function Page() {
                     <Button
                       variant="outlined"
                       fullWidth
+                      className="text-black"
                       color="inherit"
                       onClick={() => {
                         handleLogin();

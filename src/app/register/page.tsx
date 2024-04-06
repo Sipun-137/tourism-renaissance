@@ -1,5 +1,4 @@
 "use client";
-import FormInputControls from "@/components/FormInputControl";
 import Loading from "@/components/Loading";
 import { RegisterCredential, RegisterCredentialItem } from "@/utils";
 import { Button, TextField } from "@mui/material";

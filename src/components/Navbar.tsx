@@ -1,12 +1,10 @@
 "use client";
-import { adminNavOptions, navOptions } from "@/utils/nav";
+import { adminNavOptions, dropdownMenu, navOptions } from "@/utils/nav";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Fragment, useContext } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
 import { GlobalContext } from "@/context";
-import Cookies from "js-cookie";
 import PermIdentitySharpIcon from "@mui/icons-material/PermIdentitySharp";
 
 export default function Navbar() {
@@ -14,104 +12,136 @@ export default function Navbar() {
   const isAdmin = user?.role == "admin" ? true : false;
   const router = useRouter();
 
-  function handleLogout() {
-    setAuthUser(false);
-    setUser(null);
-    Cookies.remove("token");
-    localStorage.clear();
-    router.push("/");
-  }
-
-  function NavItems({ isModal = false, isAdminView }: any) {
-    return (
-      <div
-        id="nav-items"
-        className={`items-center justify-between w-full md:flex md:w-auto ${
-          isModal ? "block" : "hidden"
-        }`}
-      >
-        <ul
-          className={`flex flex-col p-4 md:p-0 mt-4 font-medium  rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 ${
-            isModal ? "border-none" : "border border-gray-100"
-          }`}
-        >
-          {isAdminView
-            ? adminNavOptions.map((item) => (
-                <Link
-                  href={item.path}
-                  className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded md:p-0"
-                  key={item.id}
-                >
-                  {item.label}
-                </Link>
-              ))
-            : navOptions.map((item) => (
-                <Link
-                  href={item.path}
-                  className="cursor-pointer block py-2 pl-3 pr-4 text-gray-900 rounded md:p-0"
-                  key={item.id}
-                >
-                  {item.label}
-                </Link>
-              ))}
-        </ul>
-      </div>
-    );
-  }
   return (
-    <nav className=" fixed w-full z-20 top-0 left-0  bg-gradient-to-b from-[#7FCDFF] from-40%  to-sky-100 to-90% ">
-      <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <div className="flex items-center cursor-pointer">
-          <span className="self-center text-2xl font-semibold whitespace-nowrap uppercase text-cyan-800 ruslan-display-regular">
-            tourism resinnace
-          </span>
+    <>
+      <div className="navbar bg-base-100 px-8 text-white">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-8 shadow bg-base-100 rounded-box w-52 gap-y-4 "
+            >
+              {isAdmin ? (
+                <details>
+                  <summary>User</summary>
+                  <ul className="p-2">
+                    {dropdownMenu.map((item) => (
+                      <li key={item.id}>
+                        <Link
+                          href={item.path}
+                          className="cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:p-0"
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : null}
+              {isAdmin
+                ? adminNavOptions.map((item) => (
+                    <li key={item.id} className="">
+                      <Link
+                        href={item.path}
+                        className="cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:p-0"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))
+                : navOptions.map((item) => (
+                    <li key={item.id}>
+                      <Link
+                        href={item.path}
+                        className="cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:p-0"
+                      >
+                        {item.label}
+                      </Link>
+                    </li>
+                  ))}
+            </ul>
+          </div>
+          <h1 className="btn btn-ghost text-[.8rem] md:text-2xl">
+            Tourism Renaissance
+          </h1>
         </div>
-        <div className="flex md:order-2 gap-2 text-cyan-900">
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1">
+            <li>
+              {isAdmin ? (
+                <details>
+                  <summary>User</summary>
+                  <ul className="p-4 gap-4">
+                    {dropdownMenu.map((item) => (
+                      <li key={item.id}>
+                        <Link
+                          href={item.path}
+                          className="cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:p-0"
+                        >
+                          {item.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : null}
+            </li>
+
+            {isAdmin
+              ? adminNavOptions.map((item) => (
+                  <li key={item.id}>
+                    <Link href={item.path}>{item.label}</Link>
+                  </li>
+                ))
+              : navOptions.map((item) => (
+                  <li key={item.id}>
+                    <Link href={item.path}>{item.label}</Link>
+                  </li>
+                ))}
+          </ul>
+        </div>
+        <div className="navbar-end">
           {isAdmin && isAuthUser ? (
             <Fragment>
               <Button>admin</Button>
             </Fragment>
           ) : null}
-
-          {
-            // if user isn't authenticated, show login button and register link. If they are, show logout button and profile link
-
-            isAuthUser ? (
-              <Fragment>
-                <Button href="/profile" size="small" color="inherit">
-                  <PermIdentitySharpIcon />
-                </Button>
-                <Button onClick={handleLogout} color="inherit">logout</Button>
-              </Fragment>
-            ) : (
-              <Fragment>
-                <Button
+          {isAuthUser ? (
+            <Fragment>
+              <Button href="/profile" size="small" color="inherit">
+                <PermIdentitySharpIcon />
+              </Button>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Button
                 color="inherit"
-                  onClick={() => {
-                    router.push("/login");
-                  }}
-                >
-                  login
-                </Button>
-              </Fragment>
-            )
-          }
-          <Button
-            data-collapse-toggle="navbar-sticky"
-            size="small"
-            aria-controls="navbat-sticky"
-            aria-expanded="false"
-            className="md:hidden text-gray-500"
-            onClick={() => {
-              // setShowNavModal(!showNavModal);
-            }}
-          >
-            <MenuIcon />
-          </Button>
+                onClick={() => {
+                  router.push("/login");
+                }}
+              >
+                login
+              </Button>
+            </Fragment>
+          )}
         </div>
-        <NavItems isAdminView={isAdmin} />
       </div>
-      <></>
-    </nav>
+    </>
   );
 }

@@ -9,9 +9,9 @@ import {
   Select,
 } from "@mui/material";
 import Place from "./PlaceDetails";
-import PlaceDetails from "./PlaceDetails";
 import PlaceAutoComplete from "./PlaceAutoComplete";
 import { GlobalContext } from "@/context";
+import HotelDetails from "./HotelDetails";
 
 interface Place {
   // Define the properties of a place object
@@ -29,7 +29,7 @@ interface ListProps {
   rating: number;
   setRating: (rating: number) => void;
 }
-export default function List({
+export default function Hlist({
   places,
   childClicked,
   isLoading,
@@ -57,20 +57,9 @@ export default function List({
         <>
           <div className="m-3  shadow-xl bg-inherit rounded-lg ">
             <PlaceAutoComplete setCoordinates={setCoordinates} />
-            <FormControl className="mb-[30px] min-w-[120px] m-3">
-              <InputLabel>Rating</InputLabel>
-              <Select
-                autoWidth
-                size="small"
-                value={rating}
-                onChange={(e) => setRating(Number(e.target.value))}
-              >
-                <MenuItem value={0}>All</MenuItem>
-                <MenuItem value={3}>above 3.0</MenuItem>
-                <MenuItem value={4}>Above 4.0</MenuItem>
-                <MenuItem value={4.5}>Above 4.5</MenuItem>
-              </Select>
-            </FormControl>
+          </div>
+          <div>
+            
           </div>
           <div className="mt-4 pt-4 p-1 rounded-sm bg-inherit">
             <Grid
@@ -80,7 +69,7 @@ export default function List({
             >
               {places?.map((place, i) => (
                 <Grid item key={i} xs={12}>
-                  <PlaceDetails
+                  <HotelDetails
                     place={place}
                     selected={Number(childClicked) === i}
                     refProp={elRefs[i]}

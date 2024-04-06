@@ -9,6 +9,15 @@ export const getPlaceData = async (formData: any) => {
     }
 }
 
+export const getHotelData=async(formData:any)=>{
+    try {
+        const response = await axios.post('/api/data/hotellist', JSON.stringify(formData))
+        return response.data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export const getCoordinate = async (pname: string) => {
     const options = {
         method: 'GET',

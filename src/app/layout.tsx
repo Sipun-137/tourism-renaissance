@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className={inter.className} >
         <GlobalState>
           <Navbar />
-          <main className="text-black flex flex-col mt-[65px]">
+          <main className=" flex flex-col ">
             {children}
           </main>
         </GlobalState>
