@@ -19,7 +19,6 @@ import Chip from "@mui/material/Chip";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-
 interface reviewType {
   title: string;
   text: string;
@@ -32,12 +31,8 @@ interface reviewType {
   photos: any;
 }
 
-
-
-
-
-export default function Details({ details,hid }: any) {
-  const router=useRouter();
+export default function Details({ details, hid }: any) {
+  const router = useRouter();
   const [imgurl, setImgurl] = useState("");
   useEffect(() => {
     let newurl = details?.photos[0].urlTemplate.replace(
@@ -113,9 +108,13 @@ export default function Details({ details,hid }: any) {
               </h1>
               <div className="mt-10 flex flex-col items-center justify-between space-y-4 border-t border-b py-4 sm:flex-row sm:space-y-0">
                 <div className="flex items-end">
+                  <h2 className="text-red-400">
+                    {details && details.price.strikeThroughPrice}
+                  </h2>
                   <h1 className="text-3xl font-bold">
-                    ₹{details && details.price.strikethroughPrice}
+                    ₹{details && details.price.displayPrice}
                   </h1>
+                  <p className="text-sm">{details && details.price.status}</p>
                   {/* <p
                     className={`mr-3 font-semibold  ${
                       item.onsale === "yes"
@@ -132,7 +131,9 @@ export default function Details({ details,hid }: any) {
                 <Button
                   type="button"
                   className="mt-1.5 inline-block bg-black px-5 py-3 text-xs font-medium tracking-wide uppercase text-white"
-                    onClick={() => {router.push(`/checkout/booking/${hid}`)}}
+                  onClick={() => {
+                    router.push(`/checkout/booking/${hid}`);
+                  }}
                 >
                   Book Now
                 </Button>
@@ -364,8 +365,6 @@ export default function Details({ details,hid }: any) {
           </div>
         </div>
         {/* question answer */}
-
-        
       </section>
     </>
   );

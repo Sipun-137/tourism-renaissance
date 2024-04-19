@@ -12,12 +12,12 @@ export async function POST(req:NextRequest){
           url: 'https://tripadvisor16.p.rapidapi.com/api/v1/hotels/getHotelDetails',
           params: {
             id: id,
-            checkIn: '2024-04-02',
-            checkOut: '2024-04-02',
+            checkIn: '2024-04-09',
+            checkOut: '2024-04-09',
             currency: 'INR'
           },
           headers: {
-            'X-RapidAPI-Key': process.env.Z_RAPID_API_KEY as string,
+            'X-RapidAPI-Key': process.env.OUTLOOK_RAPID_API_KEY as string,
             'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
           }
         };

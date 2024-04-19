@@ -36,9 +36,6 @@ export default function Home() {
       <section className="min-h-screen">
         <Globe />
       </section>
-      <section className="min-h-screen">
-
-      </section>
     </>
   );
 }

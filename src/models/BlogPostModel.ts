@@ -1,17 +1,19 @@
 import mongoose from "mongoose";
 
 const BlogPostSchema = new mongoose.Schema({
-    userID: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    }, title: {
+    },
+    pid: String
+    , title: {
         type: String,
         required: true
-    }, content: {
+    }, description: {
         type: String,
         required: true
     }
-},{timestamps:true})
+}, { timestamps: true })
 
 const BlogPost = mongoose.models.BlogPost || mongoose.model("BlogPost", BlogPostSchema)
 export default BlogPost;

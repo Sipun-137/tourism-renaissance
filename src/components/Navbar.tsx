@@ -77,7 +77,7 @@ export default function Navbar() {
                   ))}
             </ul>
           </div>
-          <h1 className="btn btn-ghost text-[.8rem] md:text-2xl">
+          <h1 className="btn btn-ghost text-[.8rem] md:text-2xl" onClick={()=>{router.push("/")}}>
             Tourism Renaissance
           </h1>
         </div>
@@ -87,12 +87,12 @@ export default function Navbar() {
               {isAdmin ? (
                 <details>
                   <summary>User</summary>
-                  <ul className="p-4 gap-4">
+                  <ul className="p-4 gap-4 z-10">
                     {dropdownMenu.map((item) => (
                       <li key={item.id}>
                         <Link
                           href={item.path}
-                          className="cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:p-0"
+                          className="cursor-pointer  block py-2 pl-3 pr-4 text-white rounded "
                         >
                           {item.label}
                         </Link>

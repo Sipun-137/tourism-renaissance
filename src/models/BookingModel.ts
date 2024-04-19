@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
-
-
 const BookingSchema= new mongoose.Schema({
-    hotelid:{
+    hotelId:{
         type:String,
         required:true
     },
@@ -11,18 +9,15 @@ const BookingSchema= new mongoose.Schema({
         ref:"User"
     },
     name:String,
+    hotelName:String,
+    email:String,
     aadharNo:String,
-    ContactNo:Number,
-    CheckInDate:Date,
-    checkOutDate:Date,
-    address:{
-        addressline:String,
-        city:String,
-        state:String,
-        country:String,
-        pin:String
-
-    }
+    ContactNo:String,
+    CheckInDate:String,
+    CheckOutDate:String,
+    address:String,
+    price:String,
+    status:String
 },{timestamps:true})
 
 const Booking=mongoose.models.Booking||mongoose.model("Booking",BookingSchema)

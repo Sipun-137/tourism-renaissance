@@ -6,7 +6,6 @@ import { AuthUser } from "@/middleware";
 connect();
 
 const schema = Joi.object({
-    userID: Joi.string().required(),
     title: Joi.string().required(),
     content: Joi.string().required(),
 })
@@ -14,8 +13,8 @@ const schema = Joi.object({
 export const dynamic = "force-dynamic"
 
 export async function POST(req: NextRequest) {
-    const { userID, title, content } = await req.json();
-    const { error } = schema.validate({ userID: userID, title: title, content: content });
+    const { userId, pid, title, description } = await req.json();
+    const { error } = schema.validate({ title: title, content: description });
     if (error) return NextResponse.json({ success: false, message: error.details[0].message });
     try {
         const isAuthUser = await AuthUser(req);
@@ -25,16 +24,16 @@ export async function POST(req: NextRequest) {
                 message: "unauthorized access!!!"
             })
         }
-        const newPost = await BlogPost.create({ userID, title, content });
+        const newPost = await BlogPost.create({ userId, pid, title, description });
         if (newPost) {
             return NextResponse.json({
                 success: true,
-                message: "sent successfully"
+                message: "post successfully"
             })
-        }else{
+        } else {
             return NextResponse.json({
                 success: false,
-                message:"failed to create !!! please try again "
+                message: "failed to create !!! please try again "
             })
         }
 

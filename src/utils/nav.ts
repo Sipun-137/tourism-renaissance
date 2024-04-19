@@ -31,8 +31,14 @@ export const adminNavOptions = [
     {
         id: "bookings",
         label: "bookings",
-        path: "/bookings"
-    }, {
+        path: "/admin/booking"
+    },
+    {
+        id:"blogs",
+        label:"blogs",
+        path:"/admin/blogs"
+    }
+    ,{
         id: "test",
         label: "test",
         path: "/test"

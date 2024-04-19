@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Modal, styled, Typography } from "@mui/material";
+import { Button, Modal, styled, Typography } from "@mui/material";
 import EditNoteSharpIcon from "@mui/icons-material/EditNoteSharp";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "@/context";
@@ -16,6 +16,8 @@ import {
 } from "firebase/storage";
 import { UploadProfilePicture } from "@/services/LoginUser";
 import toast, { Toaster } from "react-hot-toast";
+import Blog from "@/components/Blog/Blog";
+import { GetUserBlog } from "@/services/Blog";
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -29,7 +31,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function Page() {
-  const { setAuthUser, user, setUser, isAuthUser } = useContext(GlobalContext);
+  const { setAuthUser, user, setUser } = useContext(GlobalContext);
 
   const initialFromData = {
     _id: "",
@@ -42,6 +44,7 @@ export default function Page() {
   const [uploadmodal, setUploadmodal] = useState(false);
   const [profileModal, setProfileModal] = useState(false);
   const [imgurl, setImgUrl] = useState("");
+ 
   async function OpenModal() {
     if (!user) return;
     setModal(true);
@@ -93,6 +96,8 @@ export default function Page() {
     });
   }
 
+
+
   async function handleImage(event: any) {
     setimgLoading(true);
     console.log(event.target.files);
@@ -122,15 +127,18 @@ export default function Page() {
       setFormData({ ...formData, imgurl: "" });
     }
   }
+
+
+  async function handleEdit(){
+    
+  }
   useEffect(() => {
     setFormData({ ...formData, _id: user?._id });
   }, [user]);
-
-  console.log(formData);
   return (
     <>
       <Toaster position="top-right" toastOptions={{ duration: 2500 }} />
-      <section className="my-8 mx-10 p-4 h-screen">
+      <section className="my-8 mx-10 p-4">
         <div className="">
           <div className="flex flex-col md:grid grid-cols-11 grid-rows-5 gap-4">
             {/* user profile image section */}
@@ -160,8 +168,8 @@ export default function Page() {
               </div>
             </div>
             {/* user profile edit button and logout button */}
-            <div className="col-span-2 col-start-10 row-start-1 flex flex-row gap-6">
-              <Button variant="outlined" color="inherit">
+            <div className="col-span-2 col-start-10 row-start-1 flex justify-between flex-row gap-6">
+              <Button variant="outlined" color="inherit" onClick={handleEdit}>
                 <EditNoteSharpIcon />
               </Button>
               <Button onClick={handleLogout} variant="outlined" color="inherit">
@@ -177,20 +185,20 @@ export default function Page() {
                 {user?.name}
               </Typography>
               <label htmlFor="email" className="text-sm font-serif">
-                  email
-                </label>
-                <Typography className="lg:text-xl font-serif font-semibold capitalize">
-                  {user?.email}
-                </Typography>
+                email
+              </label>
+              <Typography className="lg:text-xl font-serif font-semibold capitalize">
+                {user?.email}
+              </Typography>
             </div>
             {/*  */}
             <div className="col-span-2 row-span-2 col-start-10 row-start-2">
               <div className="">
-              <label htmlFor="role" className="text-sm font-serif">
-                  role
+                <label htmlFor="role" className="text-sm font-serif">
+                  {/* role */}
                 </label>
                 <Typography className="lg:text-xl font-serif font-semibold capitalize">
-                  {user?.role}
+                  {/* {user?.role} */}
                 </Typography>
               </div>
             </div>
@@ -201,8 +209,20 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section className="h-screen">
-
+      {/* blog post */}
+      <section className="min-h-screen">
+        <section className="min-h-screen m-8">
+          <div className="container mx-auto my-8 px-4">
+            <div className="flex justify-between flex-wrap gap-4 items-center">
+              <p className="uppercase font-sans tracking-[5px]">Blog post</p>
+            </div>
+          </div>
+          <div className="container mx-auto my-8 px-4">
+            <div className="flex flex-col gap-3">
+              <Blog id={user?._id} />
+            </div>
+          </div>
+        </section>
       </section>
 
       {/* view profile modal  and upload modal button */}
@@ -293,6 +313,7 @@ export default function Page() {
           </div>
         </div>
       </Modal>
+      
     </>
   );
 }

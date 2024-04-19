@@ -2,91 +2,88 @@
 import TextInput from "@/components/inputControl/TextInput";
 import { GlobalContext } from "@/context";
 import { userCredentialForm } from "@/utils";
-import { TextareaAutosize as BaseTextareaAutosize } from "@mui/base/TextareaAutosize";
-import { styled } from "@mui/system";
 import { FormControl, Typography, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
+import { GetHotelData } from "@/services/Data/getHotelData";
+import { CreateBooking } from "@/services/Booking";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Page({ params }: { params: { id: string } }) {
-  const blue = {
-    100: "#DAECFF",
-    200: "#b6daff",
-    400: "#3399FF",
-    500: "#007FFF",
-    600: "#0072E5",
-    900: "#003A75",
-  };
-  const grey = {
-    50: "#F3F6F9",
-    100: "#E5EAF2",
-    200: "#DAE2ED",
-    300: "#C7D0DD",
-    400: "#B0B8C4",
-    500: "#9DA8B7",
-    600: "#6B7A90",
-    700: "#434D5B",
-    800: "#303740",
-    900: "#1C2025",
-  };
-  const Textarea = styled(BaseTextareaAutosize)(
-    ({ theme }) => `
-    box-sizing: border-box;
-    width: 100%;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.5;
-    padding: 8px 12px;
-    border-radius: 8px;
-    color: ${theme.palette.mode === "dark" ? grey[300] : grey[900]};
-    background: ${theme.palette.mode === "dark" ? grey[900] : "#fff"};
-    border: 1px solid ${theme.palette.mode === "dark" ? grey[700] : grey[200]};
-    box-shadow: 0px 2px 2px ${
-      theme.palette.mode === "dark" ? grey[900] : grey[50]
-    };
-  
-    &:hover {
-      border-color: ${blue[400]};
-    }
-  
-    &:focus {
-      border-color: ${blue[400]};
-      box-shadow: 0 0 0 3px ${
-        theme.palette.mode === "dark" ? blue[600] : blue[200]
-      };
-    }
-  
-    // firefox
-    &:focus-visible {
-      outline: 0;
-    }
-  `
-  );
   const router = useRouter();
   const id = params.id;
-  const { user, isAuthUser } = useContext(GlobalContext);
-  const [formData, setFormData] = useState<any>({
+  const initialFormData = {
+    userID: "",
     hotelId: id,
     name: "",
-    aadharno: "",
-    email: user?.email,
-    chkindt: "",
-    chkoutdt: "",
+    hotelName:"name",
+    aadharNo: "",
+    email: "",
+    ContactNo: "",
+    CheckInDate: "",
+    CheckOutDate: "",
     address: "",
-  });
-  useEffect(() => {
-    if (!isAuthUser) {
-      router.push("/login");
+    price: 0,
+    status:"booked"
+  };
+  const { user, isAuthUser } = useContext(GlobalContext);
+  const [data, setData] = useState<any>(null);
+  async function getData() {
+    const hdata = await GetHotelData(id);
+    setData(hdata.data);
+    console.log("data fetching useeffect hook");
+  }
+
+  const [formData, setFormData] = useState<any>(initialFormData);
+  const formatDate = (dateString: string)=> {
+    // Assuming dateString is in yyyy-mm-dd format (default for input type 'date')
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`
+  };
+
+  async function handleBooking() {
+    setFormData({ ...formData, CheckInDate: formatDate(formData.CheckInDate)});
+    setFormData({ ...formData, CheckOutDate: formatDate(formData.CheckOutDate)});
+    const res = await CreateBooking(formData);
+    if (res.success) {
+      toast.success(res.message);
+      // setFormData(initialFormData);
+      router.push("/u/my-booking");
+    } else {
+      // setFormData(initialFormData);
+      setUserData();
+      toast.error(res.message);
     }
-  }, [isAuthUser]);
+  }
+
+  useEffect(() => {
+    getData();
+  }, [id]);
+
+
+
+  function setUserData(){
+    setFormData({ ...formData, email: user?.email, userID: user?._id });
+  }
+
+  useEffect(() => {
+    if (data === null) {
+      setFormData({ ...formData, price: 2500 });
+    }
+    setFormData({ ...formData, email: user?.email, userID: user?._id });
+    if (data !== null) {
+      setFormData({ ...formData, price: data?.price.displayPrice,hotelName:data?.title });
+    }
+  }, [isAuthUser, user, data]);
+
   console.log(formData);
   return (
     <>
+      <Toaster position="top-right" />
       <section className="min-h-screen p-8 ">
         <div className="container mx-auto my-8 px-4">
           <div className="flex justify-between flex-wrap gap-4 items-center">
-            <p className="uppercase font-sans tracking-[5px]">Ckeckout</p>
+            <p className="uppercase font-sans tracking-[5px]"></p>
           </div>
         </div>
 
@@ -95,8 +92,15 @@ export default function Page({ params }: { params: { id: string } }) {
             <div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://media.istockphoto.com/id/487042276/photo/hotel-sign.jpg?s=612x612&w=0&k=20&c=DjEVAoFnjB2cWwX28cxSKWkxsbze7o9jgkYrhyfmq9E="
-                alt=""
+                src={
+                  data !== null
+                    ? data?.photos[0].urlTemplate.replace(
+                        "?w={width}&h={height}&s=1",
+                        ""
+                      )
+                    : "https://media.istockphoto.com/id/487042276/photo/hotel-sign.jpg?s=612x612&w=0&k=20&c=DjEVAoFnjB2cWwX28cxSKWkxsbze7o9jgkYrhyfmq9E="
+                }
+                alt="image"
               />
             </div>
           </div>
@@ -124,20 +128,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 ))}
 
                 {/* form controls for the  */}
-                <FormControl className="m-1" fullWidth>
-                  <label htmlFor="Address">Address</label>
-                  <Textarea
-                    aria-label="Address"
-                    minRows={3}
-                    placeholder="Address"
-                    onChange={(event: any) => {
-                      setFormData({
-                        ...formData,
-                        address: event.target.value,
-                      });
-                    }}
-                  />
-                </FormControl>
+
                 {/* check in and check out date input */}
                 <div className="flex justify-start ">
                   <FormControl className="m-1">
@@ -145,12 +136,12 @@ export default function Page({ params }: { params: { id: string } }) {
                     <input
                       id="chkin-input"
                       type="date"
-                      value={formData.chkindt}
+                      value={formData.CheckInDate}
                       className="bg-[#b4b1e9a7] border border-black rounded-sm"
                       onChange={(event: any) => {
                         setFormData({
                           ...formData,
-                          chkindt: event.target.value,
+                          CheckInDate: event.target.value,
                         });
                       }}
                     />
@@ -159,12 +150,12 @@ export default function Page({ params }: { params: { id: string } }) {
                     <label htmlFor="">check out</label>
                     <input
                       type="date"
-                      value={formData.chkoutdt}
+                      value={formData.CheckOutDate}
                       className="bg-[#b4b1e9a7] border border-black rounded-sm"
                       onChange={(event: any) => {
                         setFormData({
                           ...formData,
-                          chkoutdt: event.target.value,
+                          CheckOutDate: event.target.value,
                         });
                       }}
                     />
@@ -182,11 +173,27 @@ export default function Page({ params }: { params: { id: string } }) {
                     </Typography>
                   </div>
                   <div className="flex justify-between items-center p-4">
-                    <Typography>provider name</Typography>
-                    <Typography>₹{2500}</Typography>
+                    <Typography>
+                      {data && data.price.providerName
+                        ? data.price.providerName
+                        : "provider"}
+                    </Typography>
+                    <Typography>
+                      {data && data.price.displayPrice
+                        ? data.price.displayPrice
+                        : "in progress"}
+                    </Typography>
                   </div>
                   <div className="p-4">
-                    <Button fullWidth variant="outlined" color="inherit">
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      color="inherit"
+                      // disabled={data && data.price.displayPrice ? false : true}
+                      onClick={() => {
+                        handleBooking();
+                      }}
+                    >
                       Ckeckout
                     </Button>
                   </div>

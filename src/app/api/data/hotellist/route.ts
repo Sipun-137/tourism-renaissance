@@ -1,3 +1,4 @@
+import { ContentCutOutlined } from "@mui/icons-material";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,6 +7,7 @@ export const dynamic ='force-dynamic'
 export async function POST(req:NextRequest){
     try {
         const data=await req.json();
+        console.log(data)
         let formatDate = (date:Date) => {
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -28,7 +30,7 @@ export async function POST(req:NextRequest){
                 currencyCode: 'INR'
               },
             headers: {
-              'X-RapidAPI-Key': process.env.Z_RAPID_API_KEY as string,
+              'X-RapidAPI-Key': process.env.OUTLOOK_RAPID_API_KEY as string,
               'X-RapidAPI-Host': 'tripadvisor16.p.rapidapi.com'
             }
           };

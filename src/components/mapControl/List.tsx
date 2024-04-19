@@ -7,6 +7,9 @@ import {
   MenuItem,
   FormControl,
   Select,
+  Input,
+  FormHelperText,
+  Modal,
 } from "@mui/material";
 import Place from "./PlaceDetails";
 import PlaceDetails from "./PlaceDetails";
@@ -40,12 +43,14 @@ export default function List({
 }: ListProps) {
   const [elRefs, setElRefs] = useState<RefObject<any>[]>([]);
   const { coordinates, setCoordinates } = useContext(GlobalContext);
+
   useEffect(() => {
     const refs = Array(places?.length)
       .fill(null)
       .map((_, i) => elRefs[i] || createRef());
     setElRefs(refs);
   }, [places]);
+  
 
   return (
     <div className="m-4 p-2 pt-0">
@@ -76,7 +81,7 @@ export default function List({
             <Grid
               container
               spacing={3}
-              style={{ height: "75vh", overflow: "auto" }}
+              style={{ height: "75vh", overflow: "scroll" }}
             >
               {places?.map((place, i) => (
                 <Grid item key={i} xs={12}>
@@ -89,6 +94,7 @@ export default function List({
               ))}
             </Grid>
           </div>
+          
         </>
       )}
     </div>

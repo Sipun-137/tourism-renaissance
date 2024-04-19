@@ -61,9 +61,9 @@ function App() {
   }, [type, coordinates, bounds]);
 
   return (
-    <section className="min-h-screen text-white">
+    <section className="h-screen m-2 text-white ">
       <>
-        <div className="grid grid-cols-10 grid-rows-5 gap-4 relative">
+        <div className="grid grid-cols-10  gap-4 relative">
           <div className="col-span-4 col-start-1 row-start-1">
           <Grid item xs={12} md={4}>
               <List

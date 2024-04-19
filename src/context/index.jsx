@@ -18,14 +18,14 @@ export default function GlobalState({ children }) {
     lat: 0,
     lng: 0,
   });
-  
+
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
-     ({ coords: { latitude, longitude } }) => {
-       setCoordinates({ lat: latitude, lng: longitude });
-     }
-   );
- }, []);
+      ({ coords: { latitude, longitude } }) => {
+        setCoordinates({ lat: latitude, lng: longitude });
+      }
+    );
+  }, []);
 
   useEffect(() => {
     if (Cookies.get("token") !== undefined) {
@@ -45,7 +45,8 @@ export default function GlobalState({ children }) {
         setAuthUser,
         user,
         setUser,
-        coordinates, setCoordinates
+        coordinates,
+        setCoordinates
       }}
     >
       {children}

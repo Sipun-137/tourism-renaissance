@@ -53,12 +53,12 @@ export const RegisterCredential: RegisterCredentialItem[] = [
     helper: "Enter your name."
   },
   {
-    id:'password',
-    type:"password",
-    placeholder:"Enter your password",
-    label:"password",
-    componentType:"input",
-    helper:"Enter your password"
+    id: 'password',
+    type: "password",
+    placeholder: "Enter your password",
+    label: "password",
+    componentType: "input",
+    helper: "Enter your password"
   },
   {
     id: 'role',
@@ -85,22 +85,38 @@ export const RegisterCredential: RegisterCredentialItem[] = [
 
 ]
 
-export const userCredentialForm=[
+export const userCredentialForm = [
   {
-    id:'name',
-    type:"text",
-    placeholder:"Enter your name",
-    label:"Full name",
-    componentType:"input",
-    helper:"Enter your name"
+    id: 'name',
+    type: "text",
+    placeholder: "Enter your name",
+    label: "Full name",
+    componentType: "input",
+    helper: "Enter your name"
   },
   {
-    id:"aadharno",
-    type:"number",
-    placeholder:"Enter your aadhar number",
-    label:"Aadhar Number",
-    componentType:"input",
-    helper:"Enter your aadhar number"
+    id: "aadharNo",
+    type: "number",
+    placeholder: "Enter your aadhar number",
+    label: "Aadhar Number",
+    componentType: "input",
+    helper: "Enter your aadhar number"
+  },
+  {
+    id: 'address',
+    type: "text",
+    placeholder: "Enter your address line",
+    label: "Address line",
+    componentType: "input",
+    helper: "Enter your Address Line"
+  },
+  {
+    id: 'ContactNo',
+    type: "number",
+    placeholder: "Enter your contact number",
+    label: "contact number",
+    componentType: "input",
+    helper: "Enter your contact number"
   }
 ]
 

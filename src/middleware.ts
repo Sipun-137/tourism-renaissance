@@ -18,7 +18,7 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: [ '/login', '/register' ]
+    matcher: [ '/login', '/register','/checkout/:path*',"/profile","/u/my-booking","/u/blog" ]
 };
 
 export async function AuthUser(req:NextRequest){
@@ -27,7 +27,7 @@ export async function AuthUser(req:NextRequest){
       return false
     }
     try {
-        const extractAuthUserinfo = jwt.verify(token,'thequicklittlefoxjumpsoverthelazydogs');
+        const extractAuthUserinfo = jwt.verify(token,process.env.SECRETKEY as string);
         if (extractAuthUserinfo) {
             return extractAuthUserinfo;
         }
